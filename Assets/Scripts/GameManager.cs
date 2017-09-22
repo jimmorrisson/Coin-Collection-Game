@@ -7,30 +7,31 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public float _timer;
+    private int _coinsPicked;
+    public Timer _timer;
 
     public GameObject coin;
     public Text timeText;
+    public Text coinText;
+    public LevelController lvlController;
 
     private void Start()
     {
-        _timer = 10.0f;
+        _timer = GetComponent<Timer>();
         Spawn(coin);
     }
 
     private void Update()
     {
-        timeText.text = "Time: " + Mathf.RoundToInt(_timer).ToString();
+        var time = _timer.GetTime();
 
-        if (_timer <= 0.0f)
+        if (time <= 0)
         {
-            SceneManager.LoadScene(0);
+            time = 0;
         }
-        if(_timer >= 20)
-        {
-            Destroy(this.gameObject);
-        }
-        _timer -= Time.deltaTime;
+
+        coinText.text = "Coins: " + _coinsPicked.ToString();
+        timeText.text = "Time: " + time.ToString();
     }
 
     public void Spawn(GameObject coin)
@@ -41,5 +42,10 @@ public class GameManager : MonoBehaviour
         }
         Vector3 position = new Vector3(UnityEngine.Random.Range(-14f, 14f), 0.5f, UnityEngine.Random.Range(-14f, 14f));
         GameObject clone = Instantiate(coin, position, Quaternion.identity) as GameObject;
+    }
+
+    public void PickCoin()
+    {
+        _coinsPicked += 1;
     }
 }

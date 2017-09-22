@@ -22,7 +22,8 @@ public class CoinScript : MonoBehaviour
             _anim.SetBool("IsPicked", true);
             gameObject.transform.position = new Vector3(UnityEngine.Random.Range(-14f, 14f), 0.5f, UnityEngine.Random.Range(-14f, 14f));
             var gameMenager = menager.GetComponent<GameManager>();
-            gameMenager._timer += 10f;
+            gameMenager.PickCoin();
+            gameMenager._timer.AddTime(10f);
         }
     }
 }
